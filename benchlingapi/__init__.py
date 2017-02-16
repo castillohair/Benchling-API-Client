@@ -75,6 +75,17 @@ class Folder(object):
         elif 'd' in kwargs:
             self._populate_from_dict(kwargs['d'])
 
+    def __str__(self):
+        """
+        """
+        s = ""
+        s += "Name: {}\n".format(self.name)
+        s += "Id: {}\n".format(self.id)
+        if self.sequences is not None:
+            s += "Number of sequences: {}\n".format(len(self.sequences))
+
+        return s
+
     def _load_by_id(self, id):
         """
         """
@@ -127,6 +138,29 @@ class Sequence(object):
             self._load_by_id(kwargs['id'])
         elif 'd' in kwargs:
             self._populate_from_dict(kwargs['d'])
+
+    def __str__(self):
+        """
+        """
+        s = ""
+        s += "Name: {}\n".format(self.name)
+        s += "Id: {}\n".format(self.id)
+        if self.creator is not None:
+            s += "Created by: {}\n".format(self.creator.name)
+        if self.folder is not None:
+            s += "In folder: {}\n".format(self.folder.name)
+        if self.circular is not None:
+            s += "Sequence type: {}\n".format("circular"
+                                              if self.circular
+                                              else "linear")
+        if self.length is not None:
+            s += "Length: {}\n".format(self.length)
+        if self.annotations is not None:
+            s += "Number of annotations: {}\n".format(len(self.annotations))
+        if self.primers is not None:
+            s += "Number of primers attached: {}\n".format(len(self.primers))
+
+        return s
 
     def _load_by_id(self, id):
         """
@@ -213,6 +247,17 @@ class Entity(object):
         elif 'd' in kwargs:
             self._populate_from_dict(kwargs['d'])
 
+    def __str__(self):
+        """
+        """
+        s = ""
+        s += "Name: {}\n".format(self.name)
+        s += "Id: {}\n".format(self.id)
+        if self.type is not None:
+            s += "Type: {}\n".format(self.type)
+
+        return s
+
     def _load_by_id(self, id):
         """
         """
@@ -247,6 +292,26 @@ class Annotation(object):
         if 'd' in kwargs:
             self._populate_from_dict(kwargs['d'])
 
+    def __str__(self):
+        """
+        """
+        s = ""
+        s += "Name: {}\n".format(self.name)
+        if self.type is not None:
+            s += "Type: {}\n".format(self.type)
+        if self.strand is not None:
+            if self.strand == 1:
+                strand_text = "Forward"
+            elif self.strand == -1:
+                strand_text = "Reverse"
+            else:
+                strand_text = "None"
+            s += "Strand: {}\n".format(strand_text)
+        if (self.start is not None) and (self.end is not None):
+            s += "Location: {}..{}\n".format(self.start, self.end)
+
+        return s
+
     def _populate_from_dict(self, d):
         """
         """
@@ -266,6 +331,17 @@ class Note(object):
         if 'd' in kwargs:
             self._populate_from_dict(kwargs['d'])
 
+    def __str__(self):
+        """
+        """
+        s = ""
+        if self.creator is not None:
+            s += "Created by: {}\n".format(self.creator)
+        if self.text is not None:
+            s += "Text:\n{}\n".format(self.text)
+
+        return s
+
     def _populate_from_dict(self, d):
         """
         """
@@ -281,6 +357,23 @@ class Permissions(object):
         """
         if 'd' in kwargs:
             self._populate_from_dict(kwargs['d'])
+
+    def __str__(self):
+        """
+        """
+        s = ""
+        if self.admin is not None:
+            s += "Admin? {}\n".format("Yes" if self.admin else "No")
+        if self.owner is not None:
+            s += "Owner? {}\n".format("Yes" if self.owner else "No")
+        if self.readable is not None:
+            s += "Can read? {}\n".format("Yes" if self.readable else "No")
+        if self.writable is not None:
+            s += "Can write? {}\n".format("Yes" if self.writable else "No")
+        if self.appendable is not None:
+            s += "Can append? {}\n".format("Yes" if self.appendable else "No")
+
+        return s
 
     def _populate_from_dict(self, d):
         """
@@ -299,6 +392,24 @@ class Primer(object):
         """
         if 'd' in kwargs:
             self._populate_from_dict(kwargs['d'])
+
+    def __str__(self):
+        """
+        """
+        s = ""
+        s += "Name: {}\n".format(self.name)
+        if self.strand is not None:
+            if self.strand == 1:
+                strand_text = "Forward"
+            elif self.strand == -1:
+                strand_text = "Reverse"
+            else:
+                strand_text = "None"
+            s += "Strand: {}\n".format(strand_text)
+        if self.bind_position is not None:
+            s += "Binding position: {}\n".format(bind_position)
+
+        return s
 
     def _populate_from_dict(self, d):
         """
