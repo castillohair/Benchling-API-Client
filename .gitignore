@@ -1,5 +1,5 @@
 build
 dist
-benchling-api.egg-info
+Benchling-API-Client.egg-info
 *.pyc
 *.ipynb_checkpoints
