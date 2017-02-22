@@ -37,7 +37,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version=find_version(path.join(here, 'benchlingapi', '__init__.py')),
+    version=find_version(path.join(here, 'benchlingclient', '__init__.py')),
 
     description='Python Client for the Benchling API',
     long_description=long_description,
