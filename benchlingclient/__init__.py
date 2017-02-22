@@ -1,5 +1,5 @@
 """
-`Benchling API`
+Benchling API Client
 
 """
 
