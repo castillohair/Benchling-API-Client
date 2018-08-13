@@ -8,7 +8,10 @@ import requests
 # Versions should comply with PEP440.  For a discussion on single-sourcing
 # the version across setup.py and the project code, see
 # https://packaging.python.org/en/latest/single_source_version.html
-__version__ = '0.1.1'
+__version__ = '0.1.2'
+
+# URL for API requests
+API_URL = "https://benchling.com/api/v1/"
 
 # API Key for login
 LOGIN_KEY = 'not a real key!'
@@ -51,7 +54,7 @@ def search(query, queryType='text', limit=50, offset=0):
               }
 
     # Send request
-    r = requests.post('https://api.benchling.com/v1/search',
+    r = requests.post(API_URL + 'search',
                       auth=(LOGIN_KEY, ''),
                       json=params)
     # Raise exception if error code:
@@ -89,7 +92,7 @@ class Folder(object):
     def _load_by_id(self, id):
         """
         """
-        r = connect_get('https://api.benchling.com/v1/folders/{}'.format(id))
+        r = connect_get(API_URL + 'folders/{}'.format(id))
         self._populate_from_dict(r.json())
 
     def _populate_from_dict(self, d):
@@ -120,7 +123,7 @@ class Folder(object):
     def load_all(cls):
         """
         """
-        r = connect_get('https://api.benchling.com/v1/folders/')
+        r = connect_get(API_URL + 'folders')
 
         folder_list = []
         for folder_dict in r.json()['folders']:
@@ -165,7 +168,7 @@ class Sequence(object):
     def _load_by_id(self, id):
         """
         """
-        r = connect_get('https://api.benchling.com/v1/sequences/{}'.format(id))
+        r = connect_get(API_URL + 'sequences/{}'.format(id))
         self._populate_from_dict(r.json())
 
     def _populate_from_dict(self, d):
@@ -220,7 +223,7 @@ class Sequence(object):
     def load_all(cls):
         """
         """
-        r = connect_get('https://api.benchling.com/v1/sequences/')
+        r = connect_get(API_URL + 'sequences/')
 
         seq_list = []
         for seq_dict in r.json()['sequences']:
@@ -231,7 +234,7 @@ class Sequence(object):
     def load(self):
         """
         """
-        r = connect_get('https://api.benchling.com/v1/sequences/{}'.\
+        r = connect_get(API_URL + 'sequences/{}'.\
             format(self.id))
 
         self._populate_from_dict(r.json())
@@ -261,7 +264,7 @@ class Entity(object):
     def _load_by_id(self, id):
         """
         """
-        r = connect_get('https://api.benchling.com/v1/entities/{}'.format(id))
+        r = connect_get(API_URL + 'entities/{}'.format(id))
         self._populate_from_dict(r.json())
 
     def _populate_from_dict(self, d):
@@ -280,7 +283,7 @@ class Entity(object):
     def load_me(cls):
         """
         """
-        r = connect_get('https://api.benchling.com/v1/entities/me')
+        r = connect_get(API_URL + 'entities/me')
         return cls(d=r.json())
 
 class Annotation(object):
