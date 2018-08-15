@@ -2,7 +2,7 @@
 Python Client for the Benchling API
 ===================================
 
-This package allows you to directly access the `Benchling API <https://api.benchling.com/docs/>`_ from Python. Currently, only reading from your Benchling library is supported.
+This package allows you to directly access the `Benchling API v2 <https://docs.benchling.com/docs>`_ from Python. Currently, only reading resources related to DNA sequences is supported.
 
 Installation
 ============
@@ -26,33 +26,48 @@ First, you will need to request an API key from Benchling. You can do that eithe
     # You need to specify your key!
     benchlingclient.LOGIN_KEY = 'write_your_key_here!'
     
-    # Search for a sequence
-    seq_list = benchlingclient.search('pSC101')
-    for seq in seq_list:
-        # Benchling's search function only gives basic information about a sequence.
-        # The following loads the remaining information
-        seq.load()
-        # Print details about the sequence
-        print ""
-        print seq.id
-        print seq.name
-        print seq.description
-        print seq.creator
-        # Some other interesting attributes are: `.annotations`, `.primers`, and `.bases`.
-
     # Get all the folders to which you have read access
     # Warning: may take a while
-    folder_list = benchlingclient.Folder.load_all()
+    folder_list = benchlingclient.Folder.list_all()
+
+    print("\n{} folders found.".format(len(folder_list)))
     for folder in folder_list:
-        print ""
-        print folder.id
-        print folder.name
-        # `.sequences` contains the list of sequences in that folder. Other interesting
-        # attributes are `.owner`, `.created_at`, and `.modified_at`.
+        print("")
+        print("Folder name: {}".format(folder.name))
+        print("Folder ID: {}".format(folder.id))
+        print("ID of parent folder: {}".format(folder.parentFolderId))
+        print("ID of parent project: {}".format(folder.projectId))
+
+    # Get all the projects to which you have read access
+    # Warning: may take a while
+    project_list = benchlingclient.Project.list_all()
+
+    print("\n{} projects found.".format(len(project_list)))
+    for project in project_list:
+        print("")
+        print("Project name: {}".format(project.name))
+        print("Project ID: {}".format(project.id))
+        print("Owner: {} (ID: {})".format(project.owner.name, project.owner.id))
+
+    # Search for DNA sequences with a specified name
+    # Warning: may take a while
+    seq_list = benchlingclient.DNASequence.list_all(name="pBR322")
+
+    print("\n{} sequences found.".format(len(seq_list)))
+    # Print details about the sequence
+    for seq in seq_list:
+        print("")
+        print("Sequence name: {}".format(seq.name))
+        print("Sequence ID: {}".format(seq.id))
+        print("Sequence creator: {} (ID: {})".format(seq.creator.name,
+                                                     seq.creator.id))
+        # Some other interesting attributes are: `.annotations`, `.primers`,
+        # and `.bases`.
 
     # Load a sequence using its id
-    seq = benchlingclient.Sequence(id='Id_of_your_sequence')
-    print seq
+    seq = benchlingclient.DNASequence(id='seq_me1auXTF')
+    print("")
+    print(seq)
 
 Future work
 ===========
