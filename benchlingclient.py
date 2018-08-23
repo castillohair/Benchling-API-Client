@@ -530,16 +530,3 @@ class DNASequence(Resource):
                 len(self.translations))
 
         return s
-
-    @classmethod
-    def load_all(cls):
-        """
-        """
-        r = connect_get(API_URL + 'sequences/')
-
-        seq_list = []
-        for seq_dict in r.json()['sequences']:
-            seq_list.append(cls(d=seq_dict))
-
-        return seq_list
-
