@@ -8,7 +8,7 @@ import requests
 # Versions should comply with PEP440.  For a discussion on single-sourcing
 # the version across setup.py and the project code, see
 # https://packaging.python.org/en/latest/single_source_version.html
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 # URL of the API
 API_URL = "https://benchling.com/api/v2/"
